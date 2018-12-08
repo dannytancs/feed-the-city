@@ -19,6 +19,7 @@ const INITIAL_STATE = {
     name: '',
     cellphone: '',
     error: null,
+    points: 0
 };
 
 class SignUpFormBase extends Component {
@@ -28,14 +29,25 @@ class SignUpFormBase extends Component {
     }
 
     onSubmit = event => {
-        const { email, passwordOne } = this.state;
+        const {cellphone, name, email, passwordOne, points } = this.state;
 
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(authUser => {
+                // Create a user in your Firebase realtime database
+                return this.props.firebase
+                  .user(authUser.user.uid)
+                  .set({
+                    name: name,
+                    email: email,
+                    cellphone: cellphone,
+                    points: points
+                  });
+              })
+              .then(() => {
                 this.setState({ ...INITIAL_STATE });
                 this.props.history.push(ROUTES.HOME);
-            })
+              })
             .catch(error => {
                 this.setState({ error });
             });
@@ -58,6 +70,7 @@ class SignUpFormBase extends Component {
         } = this.state;
 
         const isInvalid = () => {
+            const invalidCellphone = cellphone.length !== 10;
             const invalidPass = passwordOne !== passwordTwo || passwordOne === '';
             const invalidName = name === '';
             let invalidEmail = email.split('@');
@@ -68,7 +81,7 @@ class SignUpFormBase extends Component {
                 invalidEmail = true;
             }
 
-            return invalidPass || invalidName || invalidEmail;
+            return invalidPass || invalidName || invalidEmail || invalidCellphone;
         }
 
         return (
@@ -94,7 +107,7 @@ class SignUpFormBase extends Component {
                     value={cellphone}
                     onChange={this.onChange}
                     type="tel"
-                    placeholder="111-111-1111"
+                    placeholder="1111111111"
                 />
 
                 <input
