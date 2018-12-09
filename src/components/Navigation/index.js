@@ -17,25 +17,24 @@ const Navigation = () => (
 );
 
 const NavigationAuth = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.HOME}>Home</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.ACCOUNT}>Account</Link>
-    </li>
-    <li>
-      <SignOutButton />
-    </li>
-  </ul>
+  <div className="navBar">
+    <span>  <Link to={ROUTES.HOME}>
+      <button type="button" className="btn btn-primary">
+        Home
+      </button>
+    </Link> </span>
+    <span> <Link to={ROUTES.ACCOUNT}>
+      <button type="button" className="btn btn-primary">
+        My Account
+      </button></Link> </span>
+    <span>  <SignOutButton /> </span>
+  </div>
 );
 
 const NavigationNonAuth = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
-  </ul>
+  <Link to={ROUTES.SIGN_IN}><button type="button" className="btn btn-primary">
+    Sign In
+</button></Link>
 );
 
 export default Navigation;

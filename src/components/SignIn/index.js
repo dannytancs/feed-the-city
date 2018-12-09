@@ -8,7 +8,7 @@ import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
   <div>
-    <h1>SignIn</h1>
+    <h1>Sign In</h1>
     <SignInForm />
     <SignUpLink />
   </div>
@@ -39,7 +39,7 @@ class SignInFormBase extends Component {
           this.props.history.push(ROUTES.HOME);
         }
         else {
-          this.setState({error: {code: 'verifyEmail', message:'Please verify your email'}})
+          this.setState({ error: { code: 'verifyEmail', message: 'Please verify your email' } })
         }
       })
       .catch(error => {
@@ -60,21 +60,30 @@ class SignInFormBase extends Component {
 
     return (
       <form id="signIn" onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
+        <div class="form-group">
+          <input
+            className="form-control"
+            aria-describedby="emailHelp"
+            name="email"
+            value={email}
+            onChange={this.onChange}
+            type="email"
+            placeholder="Email Address"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            className="form-control"
+            name="password"
+            value={password}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Password"
+          />
+        </div>
+
+        <button disabled={isInvalid} className="btn btn-primary" type="submit">
           Sign In
         </button>
         {error && <p>{error.message}</p>}

@@ -7,7 +7,7 @@ import * as ROUTES from '../../constants/routes';
 
 const SignUpPage = () => (
     <div>
-        <h1>SignUp</h1>
+        <h1>Sign Up</h1>
         <SignUpForm />
     </div>
 );
@@ -86,45 +86,79 @@ class SignUpFormBase extends Component {
 
         return (
             <form onSubmit={this.onSubmit}>
-                <input
-                    name="email"
-                    value={email}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="NYU Email Address"
-                />
+                <div class="form-group">
+                    <label for="email">NYU Email address</label>
+                    <input
+                        className="form-control"
+                        aria-describedby="emailHelp"
+                        id="email"
+                        name="email"
+                        value={email}
+                        onChange={this.onChange}
+                        type="email"
+                        placeholder="NYU Email Address"
+                    />
+                </div>
 
-                <input
-                    name="name"
-                    value={name}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Full Name"
-                />
 
-                <input
-                    name="cellphone"
-                    value={cellphone}
-                    onChange={this.onChange}
-                    type="tel"
-                    placeholder="8008888888"
-                />
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input
+                        className="form-control"
+                        id="name"
+                        name="name"
+                        value={name}
+                        onChange={this.onChange}
+                        type="text"
+                        placeholder="Full Name"
+                    />
+                </div>
 
-                <input
-                    name="passwordOne"
-                    value={passwordOne}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Password"
-                />
-                <input
-                    name="passwordTwo"
-                    value={passwordTwo}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Confirm Password"
-                />
-                <button disabled={isInvalid()} type="submit">
+                <div class="form-group">
+                    <label for="cellphone">Cellphone</label>
+                    <input
+                        className="form-control"
+                        id="cellphone"
+                        name="cellphone"
+                        value={cellphone}
+                        onChange={this.onChange}
+                        type="tel"
+                        placeholder="8008888888"
+                    />
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="passwordOne">Password</label>
+                    <input
+                        className="form-control"
+                        id="passwordOne"
+                        name="passwordOne"
+                        value={passwordOne}
+                        onChange={this.onChange}
+                        type="password"
+                        placeholder="Password"
+                    />
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="passwordTwo">Password</label>
+                    <input
+                        className="form-control"
+                        id="passwordTwo"
+                        name="passwordTwo"
+                        value={passwordTwo}
+                        onChange={this.onChange}
+                        type="password"
+                        placeholder="Confirm Password"
+                    />
+                </div>
+
+
+                <button disabled={isInvalid()} className="btn btn-primary" type="submit">
                     Sign Up
                 </button>
 
