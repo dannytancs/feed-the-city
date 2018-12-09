@@ -29,25 +29,25 @@ class SignUpFormBase extends Component {
     }
 
     onSubmit = event => {
-        const {cellphone, name, email, passwordOne, points } = this.state;
+        const { cellphone, name, email, passwordOne, points } = this.state;
 
         this.props.firebase
-            .doCreateUserWithEmailAndPassword(email, passwordOne)
-            .then(authUser => {
+            .doCreateUserWithEmailAndPassword(email, passwordOne).then(authUser => {
                 // Create a user in your Firebase realtime database
+                console.log(authUser);
                 return this.props.firebase
-                  .user(authUser.user.uid)
-                  .set({
-                    name: name,
-                    email: email,
-                    cellphone: cellphone,
-                    points: points
-                  });
-              })
-              .then(() => {
-                this.setState({ ...INITIAL_STATE });
-                this.props.history.push(ROUTES.HOME);
-              })
+                    .user(authUser.user.uid)
+                    .set({
+                        name: name,
+                        email: email,
+                        cellphone: cellphone,
+                        points: points
+                    });
+            })
+            .then(() => {
+                this.setState({ error: { code: 'verifyEmail', message: 'A confirmation link is sent to your NYU email' } });
+                this.props.firebase.sendEmailVerification();
+            })
             .catch(error => {
                 this.setState({ error });
             });
@@ -107,7 +107,7 @@ class SignUpFormBase extends Component {
                     value={cellphone}
                     onChange={this.onChange}
                     type="tel"
-                    placeholder="1111111111"
+                    placeholder="8008888888"
                 />
 
                 <input
@@ -143,7 +143,7 @@ const SignUpLink = () => (
 const SignUpForm = compose(
     withRouter,
     withFirebase,
-  )(SignUpFormBase);
+)(SignUpFormBase);
 
 export default SignUpPage;
 

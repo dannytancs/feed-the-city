@@ -32,9 +32,15 @@ class SignInFormBase extends Component {
 
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+      .then(authUser => {
+        if (authUser.user && authUser.user.emailVerified) {
+          this.setState({ ...INITIAL_STATE });
+          console.log(authUser);
+          this.props.history.push(ROUTES.HOME);
+        }
+        else {
+          this.setState({error: {code: 'verifyEmail', message:'Please verify your email'}})
+        }
       })
       .catch(error => {
         this.setState({ error });
@@ -53,7 +59,7 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form id="signIn" onSubmit={this.onSubmit}>
         <input
           name="email"
           value={email}
@@ -71,7 +77,6 @@ class SignInFormBase extends Component {
         <button disabled={isInvalid} type="submit">
           Sign In
         </button>
-
         {error && <p>{error.message}</p>}
       </form>
     );

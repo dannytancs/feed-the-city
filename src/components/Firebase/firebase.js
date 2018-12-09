@@ -22,6 +22,16 @@ class Firebase {
     doCreateUserWithEmailAndPassword = (email, password) =>
         this.auth.createUserWithEmailAndPassword(email, password);
 
+    sendEmailVerification = () => {
+        const user = this.auth.currentUser;
+        user.sendEmailVerification().then(function() {
+          // Email sent
+        }).catch(function(error) {
+          // An error happened.
+        });
+    }
+
+
     doSignInWithEmailAndPassword = (email, password) =>
         this.auth.signInWithEmailAndPassword(email, password);
 
@@ -30,7 +40,9 @@ class Firebase {
     //database 
     user = uid => this.db.ref(`users/${uid}`);
 
-    users = () => this.db.ref('users');
+    donors = () => this.db.ref('donors');
+
+    receivers = () => this.db.ref('receivers');
 }
 
 export default Firebase;
