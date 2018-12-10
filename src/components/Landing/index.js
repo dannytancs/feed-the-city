@@ -6,7 +6,6 @@ import * as ROUTES from '../../constants/routes';
 
 import { AuthUserContext } from '../Session';
 
-import SignUpPage from '../SignUp';
 
 class Landing extends Component {
     render() {

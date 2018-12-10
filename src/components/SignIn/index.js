@@ -83,7 +83,7 @@ class SignInFormBase extends Component {
         </div>
 
         <button disabled={isInvalid} className="btn btn-primary" type="submit">
-          Sign In
+          Login
         </button>
         {error && <p>{error.message}</p>}
       </form>

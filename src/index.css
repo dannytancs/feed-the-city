@@ -20,6 +20,10 @@ body {
   height: 40px;
 }
 
+.radio {
+  float:left;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
