@@ -86,8 +86,8 @@ class SignUpFormBase extends Component {
 
         return (
             <form onSubmit={this.onSubmit}>
-                <div class="form-group">
-                    <label for="email">NYU Email address</label>
+                <div className="form-group">
+                    <label htmlFor="email">NYU Email address</label>
                     <input
                         className="form-control"
                         aria-describedby="emailHelp"
@@ -101,8 +101,8 @@ class SignUpFormBase extends Component {
                 </div>
 
 
-                <div class="form-group">
-                    <label for="name">Full Name</label>
+                <div className="form-group">
+                    <label htmlFor="name">Full Name</label>
                     <input
                         className="form-control"
                         id="name"
@@ -114,8 +114,8 @@ class SignUpFormBase extends Component {
                     />
                 </div>
 
-                <div class="form-group">
-                    <label for="cellphone">Cellphone</label>
+                <div className="form-group">
+                    <label htmlFor="cellphone">Cellphone</label>
                     <input
                         className="form-control"
                         id="cellphone"
@@ -129,8 +129,8 @@ class SignUpFormBase extends Component {
 
 
 
-                <div class="form-group">
-                    <label for="passwordOne">Password</label>
+                <div className="form-group">
+                    <label htmlFor="passwordOne">Password</label>
                     <input
                         className="form-control"
                         id="passwordOne"
@@ -144,8 +144,8 @@ class SignUpFormBase extends Component {
 
 
 
-                <div class="form-group">
-                    <label for="passwordTwo">Password</label>
+                <div className="form-group">
+                    <label htmlFor="passwordTwo">Password</label>
                     <input
                         className="form-control"
                         id="passwordTwo"
