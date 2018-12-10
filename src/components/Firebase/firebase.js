@@ -42,7 +42,7 @@ class Firebase {
 
     restaurants = () => this.db.ref('restaurants');
 
-    shelter = () => this.db.ref('Shelter');
+    shelters = () => this.db.ref('Shelter');
 }
 
 export default Firebase;
