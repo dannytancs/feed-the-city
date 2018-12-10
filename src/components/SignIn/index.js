@@ -35,7 +35,6 @@ class SignInFormBase extends Component {
       .then(authUser => {
         if (authUser.user && authUser.user.emailVerified) {
           this.setState({ ...INITIAL_STATE });
-          console.log(authUser);
           this.props.history.push(ROUTES.HOME);
         }
         else {
@@ -60,7 +59,7 @@ class SignInFormBase extends Component {
 
     return (
       <form id="signIn" onSubmit={this.onSubmit}>
-        <div class="form-group">
+        <div className="form-group">
           <input
             className="form-control"
             aria-describedby="emailHelp"
@@ -72,7 +71,7 @@ class SignInFormBase extends Component {
           />
         </div>
 
-        <div class="form-group">
+        <div className="form-group">
           <input
             className="form-control"
             name="password"
