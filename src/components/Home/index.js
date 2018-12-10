@@ -9,6 +9,18 @@ import GoogleMapReact from 'google-map-react';
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 
+// class Shelter extends Component {
+//   constructor(props) {
+//     super(props)
+//   }
+
+//   render() {
+//     return (
+
+//     ) 
+//   }
+// }
+
 class HomePageBase extends Component {
   constructor(props) {
     super(props)
@@ -21,8 +33,7 @@ class HomePageBase extends Component {
       selectedOption: null
     }
     this.handleOptionChange = this.handleOptionChange.bind(this);
-
-    console.log(process.env.GOOGLE_MAP_API);
+    console.log(process.env.REACT_APP_GOOGLE_API_KEY);
   }
 
 
@@ -66,9 +77,6 @@ class HomePageBase extends Component {
             List of restaurants near you:
           </div>
 
-
-
-
           <form>
             {Object.keys(this.state.restaurants).map(key => (
 
@@ -88,31 +96,41 @@ class HomePageBase extends Component {
                 </label>
               </div>
             ))}
-          
-            <button className="btn btn-primary" style={{right: "52%", position: "absolute", top:"13%"}}type="submit">
+
+            <button className="btn btn-primary" style={{ right: "52%", position: "absolute", top: "13%" }} type="submit">
               Select
                 </button>
-            
+
           </form>
         </div>
         }
 
 
-        {!this.state.loading && <div style={{ height: '100vh', width: '50%', float: "right" }}>
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: process.env.GOOGLE_MAP_API }}
-            defaultCenter={this.state.center}
-            defaultZoom={this.state.zoom}
-          >
-            <AnyReactComponent
-              lat={this.lat}
-              lng={this.lon}
-              text={'Current Location'}
-            />
-          </GoogleMapReact>
-        </div>
+        {!this.state.loading && <GoogleMap center={this.state.center} zoom = {this.state.zoom} lat = {this.lat} lon = {this.lon} />
         }
       </div>
+    )
+  }
+}
+
+
+class GoogleMap extends Component {
+  
+  render() {
+    return (
+      <div style={{ height: '100vh', width: '50%', float: "right" }}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
+        defaultCenter={this.props.center}
+        defaultZoom={this.props.zoom}
+      >
+        <AnyReactComponent
+          lat={this.props.lat}
+          lng={this.props.lon}
+          text={'Current Location'}
+        />
+      </GoogleMapReact>
+    </div>
     )
   }
 }
