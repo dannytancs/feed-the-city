@@ -7,18 +7,6 @@ import { FirebaseContext } from '../Firebase';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
 
-// class Shelter extends Component {
-//   constructor(props) {
-//     super(props)
-//   }
-
-//   render() {
-//     return (
-
-//     ) 
-//   }
-// }
-
 class HomePageBase extends Component {
   constructor(props) {
     super(props)
@@ -92,12 +80,14 @@ class HomePageBase extends Component {
 
 
   onSubmit = event => {
+    event.preventDefault();
     this.setState({
       submitRestaurant: true,
     });
   }
 
   onSubmitShelter = event => {
+    event.preventDefault();
     this.setState({
       submitShelter: true
     })
@@ -126,6 +116,11 @@ class HomePageBase extends Component {
                 </div>
                 <div>
                   <strong>Phone:</strong> {this.state.restaurants[key].phone}
+                </div>
+                <div>
+                  <strong>Points:</strong> {Math.ceil(
+                    (Math.abs(this.state.restaurants[key].coordinates.latitude - this.state.lat) 
+                    + Math.abs(this.state.restaurants[key].coordinates.longitude - this.state.lon)) * 1000)}
                 </div>
               </label>
 
@@ -162,6 +157,11 @@ class HomePageBase extends Component {
                 <div>
                   <strong>Phone:</strong> {this.state.shelters[key]['Phone Number']}
                 </div>
+                <div>
+                  <strong>Points:</strong> {Math.ceil(
+                    (Math.abs(this.state.shelters[key].Coordinates.Latitude - this.state.restaurants[this.state.chosenRestaurant].coordinates.latitude)
+                     + Math.abs(this.state.shelters[key].Coordinates.Longitude - this.state.restaurants[this.state.chosenRestaurant].coordinates.longitude)) * 1000)}
+                </div>
               </label>
 
             ))}
@@ -177,17 +177,17 @@ class HomePageBase extends Component {
         }
 
         {this.state.submitRestaurant && this.state.submitShelter && < div style={{ height: '100%', width: '50%', float: 'left' }}>
-        <Results restaurantKey={this.state.chosenRestaurant} restaurants={this.state.restaurants} shelterKey={this.state.chosenShelter} shelters={this.state.shelters} />
+          <Results lat={this.state.lat} lon={this.state.lon} restaurantKey={this.state.chosenRestaurant} restaurants={this.state.restaurants} shelterKey={this.state.chosenShelter} shelters={this.state.shelters} />
         </div>
         }
         {
-          this.state.submitRestaurant && this.state.submitShelter && <GoogleApiResult lat={this.state.lat} lon={this.state.lon} restaurantLat={this.state.restaurants[this.state.chosenRestaurant].coordinates.latitude} 
-          restaurantLon={this.state.restaurants[this.state.chosenRestaurant].coordinates.longitude} 
-          shelterLat={this.state.shelters[this.state.chosenShelter].Coordinates.Latitude}
-          shelterLon={this.state.shelters[this.state.chosenShelter].Coordinates.Longitude}></GoogleApiResult>
+          this.state.submitRestaurant && this.state.submitShelter && <GoogleApiResult lat={this.state.lat} lon={this.state.lon} restaurantLat={this.state.restaurants[this.state.chosenRestaurant].coordinates.latitude}
+            restaurantLon={this.state.restaurants[this.state.chosenRestaurant].coordinates.longitude}
+            shelterLat={this.state.shelters[this.state.chosenShelter].Coordinates.Latitude}
+            shelterLon={this.state.shelters[this.state.chosenShelter].Coordinates.Longitude}></GoogleApiResult>
         }
 
-        
+
       </div >
     )
   }
@@ -276,6 +276,19 @@ class Results extends Component {
           <div>
             Phone: {this.props.shelters[this.props.shelterKey]['Phone Number']}
           </div>
+
+        </div>
+        <div>
+          <strong> Total points:</strong> {
+            
+            Math.ceil(
+              ((Math.abs(this.props.restaurants[this.props.restaurantKey].coordinates.latitude - this.props.lat) + 
+              Math.abs(this.props.restaurants[this.props.restaurantKey].coordinates.longitude - this.props.lon)) * 1000))
+            + 
+            Math.ceil(
+            ((Math.abs(this.props.shelters[this.props.shelterKey].Coordinates.Latitude - this.props.restaurants[this.props.restaurantKey].coordinates.latitude)
+             + Math.abs(this.props.shelters[this.props.shelterKey].Coordinates.Longitude - this.props.restaurants[this.props.restaurantKey].coordinates.longitude)) * 1000))
+          }
         </div>
       </div>
     )
@@ -320,7 +333,7 @@ class GoogleMapRestaurant extends Component {
 
           {
             Object.keys(this.props.restaurants).map(key => (
-              <Marker key = {key}
+              <Marker key={key}
                 name={this.props.restaurants[key].name}
                 position={{ lat: this.props.restaurants[key].coordinates.latitude, lng: this.props.restaurants[key].coordinates.longitude }}
               ></Marker>
@@ -409,10 +422,10 @@ const GoogleApiShelter = GoogleApiWrapper(
   })(GoogleMapShelter)
 
 
-  const GoogleApiResult = GoogleApiWrapper(
-    {
-      apiKey: process.env.REACT_APP_GOOGLE_API_KEY
-    })(ResultGoogleMap)
+const GoogleApiResult = GoogleApiWrapper(
+  {
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY
+  })(ResultGoogleMap)
 
 
 
